@@ -1,0 +1,14 @@
+{
+  "name": "AI-PR-code-reviewer",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "npx @vercel/ncc build src/main.js -o dist"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@octokit/rest": "^19.0.7",
+    "dotenv": "^16.0.3",
+    "openai": "^4.24.7"
+  }
+}
