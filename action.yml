@@ -1,0 +1,17 @@
+name: AI PR Code Reviewer
+description: OPENAI based pull request(merge request) code reviewer
+author: Zelalem Tenaw Terefe
+
+inputs:
+  name:
+    description: 'Persons Name'
+    required: true
+    default: 'Test'
+
+outputs:
+  ethiopia:
+    description: 'Country suffix'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
