@@ -3,14 +3,79 @@ description: OPENAI based pull request(merge request) code reviewer
 author: Zelalem Tenaw Terefe
 
 inputs:
-  name:
-    description: 'Persons Name'
+  repository-name:
+    description: >
+      The name of the repository for your project. It can be manually retrieved by going to the 
+      github project or using github event metadata like this: ${{ github.event.repository.name }}.
+      The second option is recommended.
     required: true
-    default: 'Test'
+  repository-owner:
+    description: >
+      The user name for the owner of the repository. It can be manually retrieved by going to the 
+      github settings or using github event metadata like this: ${{ github.repository_owner }}.
+    required: true
+  pull-request-number:
+    description: >
+      All pull requests on github have a unique pull request number assigned to them. You can find 
+      them on the url for the pull request or using ${{ github.event.pull_request.number }}. The 
+      second option is recommended since it can pull the current pull request number from github 
+      event.
+      
+      The pull request number will be used to pull all the codes that need to be reviewed by OpenAI
+      and post the comments after the review is done.
+    required: true
+  github-api-token:
+    description: >
+      Github api token also known as Personal Access token(PAT), is a secure way yo access Github 
+      resources using the Github API or command line.
+      
+      AI Code reviewer workflow uses the github api token to authenticate against Github 
+      APIs and get code files from pull requests and post comments on pull requests.For Fine-Grained 
+      tokens please make sure there is a read and write access for Pull Requests. For classic tokens
+      , it needs repo or public repo access depending on your github project visibility.
+    required: true
+  coding-language:
+    description: >
+      The workflow uses this input to filter out unnecessary files that are part of the 
+      pull requests to avoid sending them for code review. For example if the value is 
+      set to "java", the workflow will only look for java files and review them. Currently, 
+      there is no support for multiple code languages but we plan to support that in the next 
+      update.
+    required: true
+  open-ai-token:
+    description: >
+      Open AI token is a unique string of characters used to authenticate a user or application 
+      when making requests to an Open API.
+      You need an Open AI account to create the token. Once you have the account, make sure to 
+      have credit on your Open AI account otherwise the code review will be rejected.
+    required: true
+  gpt-model:
+    description: >
+      It is a type of a AI model that can generate human-like text. They are used in many 
+      applications for content generation.
+      
+      This is not a required field and if it is not supplied the workflow defaults to 
+      'gpt-3.5.turbo-1106'
+    required: false
+  temperature:
+    description: >
+      Temperature is a parameter used by GPTs to control the randomness of generated text, 
+      essentially determine how creative or predictable the output will be. A higher temperature 
+      leads to more diverse and potentially surprising responses, while a lower temperature results 
+      in more consistent and predictable outputs.
+      
+      This is not a required field and if it is not supplied the workflow defaults to 0.2
+    required: false
+  prompt-message:
+    description: >
+      This would be the prompt message that will be sent along with the codes that need to be 
+      reviewed. To get the best result make sure your prompt message is relevant to the coding 
+      language used by the code files that are being reviewed.
+    required: true
 
 outputs:
-  ethiopia:
-    description: 'Country suffix'
+  pull-request-number:
+    description: 'The number for the pull request that was reviewed'
 
 runs:
   using: 'node20'
