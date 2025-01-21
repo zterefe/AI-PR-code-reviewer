@@ -1,6 +1,6 @@
-name: AI PR Code Reviewer
-description: OPENAI based pull request(merge request) code reviewer
-author: Zelalem Tenaw Terefe
+name: 'AI PR Code Reviewer'
+description: 'OPENAI based pull request(merge request) code reviewer'
+author: 'Zelalem Tenaw Terefe'
 
 inputs:
   repository-name:
