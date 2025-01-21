@@ -6,24 +6,23 @@ inputs:
   repository-name:
     description: >
       The name of the repository for your project. It can be manually retrieved by going to the 
-      github project or using github event metadata like this: ${{ github.event.repository.name }}.
-      The second option is recommended.
-    required: true
+      github project or from github event metadata.
+    default: ${{ github.event.repository.name }}
   repository-owner:
     description: >
       The user name for the owner of the repository. It can be manually retrieved by going to the 
-      github settings or using github event metadata like this: ${{ github.repository_owner }}.
-    required: true
+      github settings or from github event metadata.
+    default: ${{ github.repository_owner }}
   pull-request-number:
     description: >
       All pull requests on github have a unique pull request number assigned to them. You can find 
-      them on the url for the pull request or using ${{ github.event.pull_request.number }}. The 
+      them on the url for the pull request or from github event metadata. The 
       second option is recommended since it can pull the current pull request number from github 
       event.
       
       The pull request number will be used to pull all the codes that need to be reviewed by OpenAI
       and post the comments after the review is done.
-    required: true
+    default: ${{ github.event.pull_request.number }}
   github-api-token:
     description: >
       Github api token also known as Personal Access token(PAT), is a secure way yo access Github 
@@ -54,9 +53,9 @@ inputs:
       It is a type of a AI model that can generate human-like text. They are used in many 
       applications for content generation.
       
-      This is not a required field and if it is not supplied the workflow defaults to 
-      'gpt-3.5.turbo-1106'
-    required: false
+      This is not a required field and if it is not supplied the workflow will use the default 
+      value
+    default: gpt-3.5-turbo-1106
   temperature:
     description: >
       Temperature is a parameter used by GPTs to control the randomness of generated text, 
@@ -65,12 +64,21 @@ inputs:
       in more consistent and predictable outputs.
       
       This is not a required field and if it is not supplied the workflow defaults to 0.2
-    required: false
+    default: 0.2
   prompt-message:
     description: >
       This would be the prompt message that will be sent along with the codes that need to be 
       reviewed. To get the best result make sure your prompt message is relevant to the coding 
       language used by the code files that are being reviewed.
+      
+      Example: "Can you review this pull request for a Java-based codebase? 
+      Please check the code for quality, ensuring it follows Java best practices like proper naming 
+      conventions, use of design patterns, and readability. Analyze the logic and functionality to 
+      verify it implements the intended features without errors. Evaluate whether the code adheres 
+      to the project's style and standards, including proper indentation, comments, and formatting. 
+      Check if the code has sufficient test coverage, including unit tests for edge cases, and 
+      mention any tests that might be missing. Also, review the performance and efficiency of the 
+      implementation."
     required: true
 
 outputs:

@@ -35476,14 +35476,6 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 248:
-/***/ ((module) => {
-
-module.exports = eval("require")("./payload/github-payload-data.js");
-
-
-/***/ }),
-
 /***/ 7851:
 /***/ ((module) => {
 
@@ -44200,14 +44192,11 @@ const calculateDiffFileStartingPosition = (filePatch) => {
 
 const getCodeReviewFromOpenAI = async(client, codeToReview) => {
     const promptMessage = `${core.getInput('prompt-message')} ${codeToReview}`;
-    const gptModel = core.getInput('gpt-model');
-    const model = gptModel == null || gptModel == "" ? 'gpt-3.5-turbo-1106' : gptModel;
-
-    const temperatureInput = core.getInput('temperature');
-    const temperature = temperatureInput == null || temperatureInput == "" ? 0.2 : temperatureInput;
+    const model = core.getInput('gpt-model');
+    const temperature = Number(core.getInput('temperature'));
 
     const reviewText =  await client.chat.completions.create({
-      model: gptModel,
+      model: model,
       messages: [{"role": "system", "content": promptMessage}],
       temperature: temperature
     });
@@ -44294,8 +44283,16 @@ async function githubCodeReviewPoster(gptCommentsPerFile, githubPayloadData, oct
 }
 
 /* harmony default export */ const github_code_review_poster = (githubCodeReviewPoster);
-// EXTERNAL MODULE: ../../../.npm/_npx/7a71fb44c9115061/node_modules/@vercel/ncc/dist/ncc/@@notfound.js?./payload/github-payload-data.js
-var github_payload_data = __nccwpck_require__(248);
+;// CONCATENATED MODULE: ./src/payload/github-payload-data.js
+class GithubPayloadData {
+    constructor(owner, repo, pullRequestNumber) {
+        this.owner = owner;
+        this.repo = repo;
+        this.pullRequestNumber = pullRequestNumber;
+    }
+}
+
+/* harmony default export */ const github_payload_data = (GithubPayloadData);
 ;// CONCATENATED MODULE: ./src/main.js
 
 
