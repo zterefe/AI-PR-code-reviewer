@@ -4,9 +4,9 @@ author: 'Zelalem Tenaw Terefe'
 
 inputs:
   repository-name:
-    description: |
+    description: >
       The name of the repository for your project. It can be manually retrieved by going to the 
-      github project or using github event metadata like this: ${{ github.event.repository.name }}.
+      github project or using github event metadata like this: "${{ github.event.repository.name }}"
       The second option is recommended.
     required: true
   repository-owner:
