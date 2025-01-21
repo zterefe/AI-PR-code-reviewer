@@ -55,7 +55,7 @@ inputs:
       
       This is not a required field and if it is not supplied the workflow will use the default 
       value
-    default: gpt-3.5.turbo-1106
+    default: 'gpt-3.5.turbo-1106'
   temperature:
     description: >
       Temperature is a parameter used by GPTs to control the randomness of generated text, 
