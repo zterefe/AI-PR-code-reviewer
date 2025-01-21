@@ -44199,7 +44199,7 @@ const getCodeReviewFromOpenAI = async(client, codeToReview) => {
     const temperature = temperatureInput == null || temperatureInput == "" ? 0.2 : temperatureInput;
 
     const reviewText =  await client.chat.completions.create({
-      model: gptModel,
+      model: model,
       messages: [{"role": "system", "content": promptMessage}],
       temperature: temperature
     });
