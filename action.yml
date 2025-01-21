@@ -4,7 +4,7 @@ author: Zelalem Tenaw Terefe
 
 inputs:
   repository-name:
-    description: <
+    description: >
      Test disc
     required: true
   repository-owner:
