@@ -44193,6 +44193,7 @@ const calculateDiffFileStartingPosition = (filePatch) => {
 const getCodeReviewFromOpenAI = async(client, codeToReview) => {
     const promptMessage = `${core.getInput('prompt-message')} ${codeToReview}`;
     const model = core.getInput('gpt-model');
+    console.log(model);
     const temperature = core.getInput('temperature');
 
     const reviewText =  await client.chat.completions.create({
