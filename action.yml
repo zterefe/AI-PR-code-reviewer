@@ -6,31 +6,79 @@ inputs:
   repository-name:
     description: >
       The name of the repository for your project. It can be manually retrieved by going to the 
-      github project or using github event metadata like this:
-    required: true
+      github project or from github event metadata.
+    default: ${{ github.event.repository.name }}
   repository-owner:
-    description: ''
-    required: true
+    description: >
+      The user name for the owner of the repository. It can be manually retrieved by going to the 
+      github settings or from github event metadata.
+    default: ${{ github.repository_owner }}
   pull-request-number:
-    description: ''
-    required: true
+    description: >
+      All pull requests on github have a unique pull request number assigned to them. You can find 
+      them on the url for the pull request or from github event metadata. The 
+      second option is recommended since it can pull the current pull request number from github 
+      event.
+      
+      The pull request number will be used to pull all the codes that need to be reviewed by OpenAI
+      and post the comments after the review is done.
+    default: ${{ github.event.pull_request.number }}
   github-api-token:
-    description: ''
+    description: >
+      Github api token also known as Personal Access token(PAT), is a secure way yo access Github 
+      resources using the Github API or command line.
+      
+      AI Code reviewer workflow uses the github api token to authenticate against Github 
+      APIs and get code files from pull requests and post comments on pull requests.For Fine-Grained 
+      tokens please make sure there is a read and write access for Pull Requests. For classic tokens
+      , it needs repo or public repo access depending on your github project visibility.
     required: true
   coding-language:
-    description: ''
+    description: >
+      The workflow uses this input to filter out unnecessary files that are part of the 
+      pull requests to avoid sending them for code review. For example if the value is 
+      set to "java", the workflow will only look for java files and review them. Currently, 
+      there is no support for multiple code languages but we plan to support that in the next 
+      update.
     required: true
   open-ai-token:
-    description: ''
+    description: >
+      Open AI token is a unique string of characters used to authenticate a user or application 
+      when making requests to an Open API.
+      You need an Open AI account to create the token. Once you have the account, make sure to 
+      have credit on your Open AI account otherwise the code review will be rejected.
     required: true
   gpt-model:
-    description: ''
-    required: false
+    description: >
+      It is a type of a AI model that can generate human-like text. They are used in many 
+      applications for content generation.
+      
+      This is not a required field and if it is not supplied the workflow will use the default 
+      value
+    default: gpt-3.5.turbo-1106
   temperature:
-    description: ''
-    required: false
+    description: >
+      Temperature is a parameter used by GPTs to control the randomness of generated text, 
+      essentially determine how creative or predictable the output will be. A higher temperature 
+      leads to more diverse and potentially surprising responses, while a lower temperature results 
+      in more consistent and predictable outputs.
+      
+      This is not a required field and if it is not supplied the workflow defaults to 0.2
+    default: 0.2
   prompt-message:
-    description: ''
+    description: >
+      This would be the prompt message that will be sent along with the codes that need to be 
+      reviewed. To get the best result make sure your prompt message is relevant to the coding 
+      language used by the code files that are being reviewed.
+      
+      Example: "Can you review this pull request for a Java-based codebase? 
+      Please check the code for quality, ensuring it follows Java best practices like proper naming 
+      conventions, use of design patterns, and readability. Analyze the logic and functionality to 
+      verify it implements the intended features without errors. Evaluate whether the code adheres 
+      to the project's style and standards, including proper indentation, comments, and formatting. 
+      Check if the code has sufficient test coverage, including unit tests for edge cases, and 
+      mention any tests that might be missing. Also, review the performance and efficiency of the 
+      implementation."
     required: true
 
 outputs:
