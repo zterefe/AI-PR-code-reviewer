@@ -1,4 +1,4 @@
-name: 'AI PR Code Reviewer'
+name: 'AI Peer Code Reviewer'
 description: 'OPENAI based pull request(merge request) code reviewer'
 author: 'Zelalem Tenaw Terefe'
 
